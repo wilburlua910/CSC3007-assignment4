@@ -99,10 +99,27 @@ Promise.all([d3.json("links-sample.json"), d3.json("cases-sample.json")]).then(d
                 .style("position", "absolute")
                 .style("background", "#fff")
                 .style("left", (e.pageX) + "px")
-                .style("top", (e.pageY) + "px");
+                .style("top", (e.pageY) + "px")
+                .style("stroke", "purple")
+                .style("stroke-dasharray", 0)
+                .style("stroke-width", "5")
+                
         })
-        .on("mouseout", () => {
-            tooltip.style("visibility", "hidden");
+        .on("mouseout", (e) => {
+            tooltip.style("visibility", "hidden")
+
+            d3.select(e.currentTarget)
+            .style("stroke", (d) => {
+                if (d.vaccinated === "no") {
+                    return "red"
+                } else {
+                    return "green"
+                }
+            })
+            .style("stroke-width", "5")
+            .style("stroke-dasharray", 10)
+
+
 
         })
         .on("mousemove", function (e, d) {
@@ -207,7 +224,7 @@ Promise.all([d3.json("links-sample.json"), d3.json("cases-sample.json")]).then(d
     legend.append("text")
         .attr("x", 80)
         .attr("y", 150)
-        .text("Male")
+        .text("Female")
         .style("font-size", "15px")
         .attr("alignment-baseline","middle")
 
